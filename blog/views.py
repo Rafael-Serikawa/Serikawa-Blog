@@ -1,17 +1,11 @@
 from django.urls import reverse_lazy
 from django.views import generic
 from .models import Post, Category
-from .forms import PostForm
 from django.contrib.auth.decorators import login_required
 from .forms import PostForm, CommentForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-
-class PostUpdateView(LoginRequiredMixin, UpdateView):
-    model = Post
-    fields = ['titulo', 'conteudo', 'categorias']
-    template_name = 'blog/post_form.html'
 
 # R - Read (Listagem)
 class PostListView(generic.ListView):
@@ -74,3 +68,5 @@ def categoria_detail(request, pk):
     categoria = get_object_or_404(Category, pk=pk) # Retorna 404 se não existir
     posts = categoria.posts.all()
     return render(request, 'blog/post_list.html', {'posts': posts, 'categoria': categoria})
+
+
